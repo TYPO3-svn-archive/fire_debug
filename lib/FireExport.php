@@ -7,7 +7,7 @@
  */
  
 /**
- * Repräsentiert einen Debug Output von FirePHP
+ * Reprï¿½sentiert einen Debug Output von FirePHP
  */
 class FireExport
 {
@@ -45,7 +45,7 @@ class FireExport
 		for($i = 0, $l = count($this->fexvars); $i < $l; $i ++)
 		{
 			$fv = & $this->fexvars[$i];
-			fb(array($this->title, array(array('Length', 'Type','Name','Value'),$fv->getAsArray())), FirePHP::TABLE);
+			fb(array($this->title, array(array('Length', 'Type','Name','Value'), $fv->getAsArray())), FirePHP::TABLE);
 		}
 	}
 }

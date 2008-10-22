@@ -66,8 +66,6 @@ class FireVar
 				}
 	
 				$this->value = $tmpArray;
-				//fb($tmpArray);
-				fb(array("Test", array(array('Length', 'Type','Name','Value'),array("2","Array","Count",array("Len" => "1","Char" => "b")))), FirePHP::TABLE);
 			}
 		}
 		return array($this->name, $this->type, $this->length, $this->value);

@@ -1,5 +1,8 @@
 (add new changes on top of this file)
 
+22.10.2008 Erik Frister  <efrister@marketing-factory.de.de>
+* Updated lib to 0.2.0 for Firefox 3.0.x and FireBug 1.2.1
+
 03.08.2008 Ingo Schmitt <is@marketing-factory.de> 
 * Initial Upload to forge and TER
 * Updated documentation
