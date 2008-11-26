@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'author' => 'Marketing Factory TYPO3 dev Team',
 	'author_email' => 'typo3@marketing-factory.de',
 	'shy' => '',
-	'dependencies' => '',
+	'dependencies' => 'sms_firephp',
 	'conflicts' => 'cc_debug',
 	'priority' => '',
 	'module' => '',
@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => '',
-	'version' => '1.1.0',
+	'version' => '1.2.0',
 	'constraints' => array(
 		'depends' => array(
 		),

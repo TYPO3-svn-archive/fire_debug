@@ -38,12 +38,13 @@ class FireVar
 		$this->value = $value;
 	}
 	
+	
 	/**
 	 * Dumps this FireVar
 	 */
 	public function getAsArray()
 	{
-		if(is_array($this->value))
+		/*if(is_array($this->value))
 		{
 			if(2 == count($this->value) && is_array($this->value[0]))
 			{
@@ -67,7 +68,7 @@ class FireVar
 	
 				$this->value = $tmpArray;
 			}
-		}
+		}*/
 		return array($this->name, $this->type, $this->length, $this->value);
 	}
 }

@@ -25,7 +25,6 @@
  *
  * This Script adapts cc_debug into Firebug
  *
- *
  * usage
  *
  * require_once(t3lib_extMgm::extPath('fire_debug').'class.tx_fire_debug.php');
@@ -38,19 +37,15 @@
  * debug($string);
  *
  *
- * @author	Marketing Factory
+ * @author	Erik Frister <efrister@web-factory.de>
  */
 
-if(!class_exists('FirePHP'))
-{
-	require_once(t3lib_extMgm::extPath('fire_debug').'lib/FirePHP.class.php');
-	require_once(t3lib_extMgm::extPath('fire_debug').'lib/fb.php');
-}
+require_once (t3lib_extMgm::extPath('sms_firephp').'class.tx_smsfirephp.php');
+
 require_once(t3lib_extMgm::extPath('fire_debug').'lib/FireExport.php');
 require_once(t3lib_extMgm::extPath('fire_debug').'lib/FireVar.php');
 
 // constants
-
 define('E_USER_ALL',	E_USER_NOTICE | E_USER_WARNING | E_USER_ERROR);
 define('E_NOTICE_ALL',	E_NOTICE | E_USER_NOTICE);
 define('E_WARNING_ALL',	E_WARNING | E_USER_WARNING | E_CORE_WARNING | E_COMPILE_WARNING);
@@ -175,28 +170,29 @@ class tx_fire_debug_div {
 			$type = 'Array';
 			$len = sizeof($var);
 			
-			$tmp_var = array();
+			/*$tmp_var = array();
 			//recursively read the vars
 			while(list($key, $val) = each($var)) {
 					$tmp_var[$key] = tx_fire_debug_div::debugvar($val, $key, $level -1, true);
 			}
 			
-			$var = $tmp_var;
+			$var = $tmp_var;*/
+			
 			
 		} else if(@is_object($var)) {
 			$type = @get_class($var);
 			if($level > -1) {
 				$vars = (array) @get_object_vars($var);
-				$vars_temp = array();
+				//$vars_temp = array();
 				
 				//properties need to be recursively debugged in case there is another object
-				while(list($key, $val) = each($vars)) {
+				/*while(list($key, $val) = each($vars)) {
 						$vars_temp[$key] = tx_fire_debug_div::debugvar($val, $key, $level -1, true);
-				}
+				}*/
 				
 				$methods = (array) @get_class_methods($var);
-				$var = array($vars_temp, $methods);
-				$len = '('. sizeof($vars_temp) . ' + ' . sizeof($methods) .')';
+				//$var = array($vars_temp, $methods);
+				$len = '('. sizeof($vars) . ' + ' . sizeof($methods) .')';
 			} else {
 				$var = 'Object not debugged. Set higher "level" if you want to debug this.';
 			}
@@ -270,8 +266,6 @@ class tx_fire_debug_ErrorList {
 #		$this->__destructor();
 	}
 
-
-#	function add(&$error)	{
 	function add($error)	{
 
 		// rearrange for eval'd code or create function errors
@@ -509,8 +503,7 @@ class tx_fire_debug_ErrorReporter {
 
 	function prepare()	{
 	}
-
-#	function current(&$error, $index)	{
+	
 	function current($error, $index)	{
 
 		$message = $this->getMessage($error);
@@ -697,27 +690,6 @@ if (!function_exists('is_a')) {
 	}
 }
 
-
-// Debug function
-// replace the debug() function in t3lib/config_default.php with this one
-/*
-function debug(&$variable, $name='*variable*', $line='*line*', $file='*file*', $recursiveDepth=3, $debugLevel=E_DEBUG){
-		// If you wish to use the debug()-function, and it does not output something, please edit the IP mask in TYPO3_CONF_VARS
-	if (!t3lib_div::cmpIP(t3lib_div::getIndpEnv("REMOTE_ADDR"), $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["devIPmask"]))	return;
-
-	if(@is_callable(array($GLOBALS['error'],'debug'))) {
-		$GLOBALS['error']->debug($variable, $name, $line, $file, $recursiveDepth, $debugLevel);
-	} else {
-		$name = ($name == '*variable*') ? 0 : $name;
-		t3lib_div::debug($variable, $name);
-	}
-}
-*/
-
-#function debugMsg ($variable, $name = '*message*', $line = '*line*', $file = '*file*', $level = E_DEBUG)	{
-#	debug ($variable, $name, $line, $file, $level);
-#}
-
 function tx_fire_debugInit() {
 	$GLOBALS['errorReporter'] =& new tx_fire_debug_ErrorReporter();
 	$GLOBALS['errorReporter']->setDateFormat('[Y-m-d H:i:s]');
@@ -729,19 +701,7 @@ function tx_fire_debugInit() {
 	$GLOBALS['errorList'] =& new tx_fire_debug_ErrorList($GLOBALS['errorReporter'], 'error', false); 
 	// set 'true' means set_error_handler('trapError') will be used. But that causes strange effects in PHP
 }
-/*
-function debugBegin() {
-	if(@is_callable(array($GLOBALS['error'],'debugBegin'))) {
-		$GLOBALS['error']->debugBegin();
-	}
-}
 
-function debugEnd() {
-	if(@is_callable(array($GLOBALS['error'],'debugEnd'))) {
-		$GLOBALS['error']->debugEnd();
-	}
-}
-*/
 
 tx_fire_debugInit();
 

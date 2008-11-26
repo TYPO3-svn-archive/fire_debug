@@ -13,10 +13,12 @@ class FireExport
 {
 	private $title;
 	private $fexvars;
+	private $FB;
 	
 	public function __construct($title)
 	{
 		$this->title = $title;
+		$this->FB = FirePHP::getInstance(true);
 	}
 	
 	public function appendToTitle($appText)
@@ -40,13 +42,17 @@ class FireExport
 	public function dump()
 	{
 		$fv = null;
-	
+		
+		$table   = array();
+		$table[] = array('Length', 'Type','Name','Value');
 		
 		for($i = 0, $l = count($this->fexvars); $i < $l; $i ++)
 		{
-			$fv = & $this->fexvars[$i];
-			fb(array($this->title, array(array('Length', 'Type','Name','Value'), $fv->getAsArray())), FirePHP::TABLE);
+			$fv 	 = & $this->fexvars[$i];
+			$table[] =  $fv->getAsArray();
 		}
+		
+		$this->FB->table($this->title, $table);
 	}
 }
 ?>
